@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en-US">
+	<head>
+		<meta charset="utf-8">
+		<title>Model</title>
+	</head>
+	<body>
+
+		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+		<script type="text/javascript" src="model.js"></script>
+		<script type="text/javascript" src="adapters/rest.js"></script>
+		<script type="text/javascript" src="adapters/dummy.js"></script>
+		<script type="text/javascript">
+			Model.configure({
+				adapter: Rest,
+				config: {
+					callbacks: {
+						start: function () {
+							console.log('Loading')
+						},
+						complete: function () {
+							console.log('Loaded')
+						},
+						success: function () {
+							console.log(arguments)
+						},
+						error: function () {
+							console.log(arguments)
+						}
+					}
+				}
+			});
+
+			var user = Model.factory({
+				name: 'user',
+				fields: ['id', 'first_name', 'last_name', 'location'],
+				defaults: {
+					location: 'Karachi, Pakistan'
+				}
+			});
+			user.url = 'api/user.php';
+			//console.log(user)
+			
+			
+			user.id = 2;
+			user.last_name = 'Junaid Farooqui';
+			user.save(function (data) {
+				console.log(data);
+			});
+
+			/*user.read(function (data) {
+				console.log(data);
+			});
+
+			user.delete(function (data) {
+				console.log(data);
+			});
+
+			user.create(function (data) {
+				console.log(data);
+			});*/
+
+			/*user.find({
+				where: [
+					['id', '=', 1], 
+					['first_name', '=', 'Abdullah']
+				],
+				limit: {
+					offset: 0, 
+					limit: 5
+				},
+				order: {
+					by: 'id',
+					sort: 'DESC'
+				}
+			}, function (data) {
+				console.log(data);
+			});*/
+		</script>
+
+	</body>
+</html>
